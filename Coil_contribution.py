@@ -1,16 +1,17 @@
 import numpy as np
 
 class Coil_contribution:
-    def __init__(self, filename):
+    def __init__(self, filename=None):
         '''
         Initialization of a class which captures all operations related to the coil field on the computational domain
         Omega. The given file with a set of coils is read in the initialization of this class.
         :param filename: Name of the (text)file where the list of coils is stored.
         '''
-        self.read_coils_file(filename)
         self.mu0 = 4 * np.pi * 1e-7
-
-
+        self.ncoils=0
+        if ( filename ):
+            self.read_coils_file(filename)
+            
     def read_coils_file(self, filename):
         '''
         Reads the list of coils with their position and current and stores this into an array.
@@ -18,6 +19,8 @@ class Coil_contribution:
         :return: Array with size (the number of coils) x 3. Every row has 3 columns: the R-component of the coil
         position, the Z-component of the coil position and the current.
         '''
+
+                
         file_coils = open(filename, "r") #"coils_symmetric.txt"
         content = np.array(file_coils.readlines())
         file_coils.close()
